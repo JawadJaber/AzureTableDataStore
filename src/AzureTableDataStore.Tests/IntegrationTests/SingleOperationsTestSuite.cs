@@ -495,6 +495,7 @@ namespace AzureTableDataStore.Tests.IntegrationTests
 
             fromTable.Description.Should().Be(null);
             fromTable.Specifications.Should().Be(null);
+            fromTable.SearchNames.Should().BeNullOrEmpty();
 
 
         }

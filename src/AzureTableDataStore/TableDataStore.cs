@@ -1871,6 +1871,23 @@ namespace AzureTableDataStore
                
             }
 
+            var list_properties_to_remove = new List<ReflectionUtils.PropertyRef<ICollection>>();
+            foreach (var property in ingoredProperties)
+            {
+                IEnumerable<ReflectionUtils.PropertyRef<ICollection>> props = collectionPropertyRefs.Where(x => x.Property.Name.Equals(property));
+                foreach (var item in props)
+                {
+                    list_properties_to_remove.Add(item);
+                }
+
+            }
+
+            foreach (var item in list_properties_to_remove)
+            {
+                collectionPropertyRefs.Remove(item);
+            }
+
+
             return (propertyDictionary, blobPropertyRefs, collectionPropertyRefs);
         }
 

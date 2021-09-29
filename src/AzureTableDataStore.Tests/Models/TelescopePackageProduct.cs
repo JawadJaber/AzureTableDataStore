@@ -54,6 +54,8 @@ namespace AzureTableDataStore.Tests.Models
         [TablePartitionKey]
         public string CategoryId { get; set; }
         public string Name { get; set; }
+
+        [TableIgnoreProperty]
         public List<string> SearchNames { get; set; }
         public DateTime AddedToInventory { get; set; }
         public Guid InternalReferenceId { get; set; }
