@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.3</Version>
+    <Version>1.0.3.1</Version>
     <Authors>Jussi Saarivirta</Authors>
     <Description>A simplified interface to Azure Storage Tables with the ability to reference blobs in Blob Containers.</Description>
     <Copyright>Jussi Saarivirta</Copyright>
@@ -14,6 +14,10 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>Azure, Azure Storage, Azure Table Storage, Table</PackageTags>
     <PackageIcon>logo-nuget.png</PackageIcon>
+    <Product>AzureTableDataStore</Product>
+    <PackageId>AzureTableDataStore</PackageId>
+    <PackageReleaseNotes>TableIgnoreProperty Attributes added</PackageReleaseNotes>
+    <Company>Jussi Saarivirta</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

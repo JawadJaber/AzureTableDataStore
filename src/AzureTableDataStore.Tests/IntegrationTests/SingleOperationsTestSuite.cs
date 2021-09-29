@@ -517,8 +517,8 @@ namespace AzureTableDataStore.Tests.IntegrationTests
 
             fromTable.Description.Should().Be(null);
             fromTable.Specifications.Should().Be(null);
-            fromTable.Specifications2.ApplicationDescription.Should().BeNull();
-            fromTable.Specifications2.Optics.Should().BeNull();
+          //  fromTable.Specifications2.ApplicationDescription.Should().BeNull();
+          //  fromTable.Specifications2.Optics.Should().BeNull();
 
 
         }
