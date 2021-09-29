@@ -600,6 +600,10 @@ namespace AzureTableDataStore
                             if (@ref.StoredInstance == null)
                                 continue;
 
+                            // if(@ref.Property.Attributes.)
+
+                            System.Diagnostics.Debug.WriteLine(@ref.Property.Attributes);
+
                             var stream = await @ref.StoredInstance.AsyncDataStream.Value.ConfigureAwait(false);
                             @ref.StoredInstance.Length = stream.Length;
                             entityData.PropertyDictionary.Add(@ref.FlattenedPropertyName,
@@ -1852,6 +1856,20 @@ namespace AzureTableDataStore
 
             propertyDictionary.Remove(_configuration.RowKeyProperty);
             propertyDictionary.Remove(_configuration.PartitionKeyProperty);
+
+            var entryType = typeof(TData);
+
+            var properties = entryType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var ingoredProperties = properties.Where(x => x.GetCustomAttributes(typeof(TableIgnorePropertyAttribute)).Any()).Select(x=>x.Name);
+
+            foreach (var property in ingoredProperties)
+            {
+                foreach (var item in propertyDictionary.Where(x=>x.Key.Equals(property) || x.Key.StartsWith($"{property}_") || x.Key.Contains($"_{property}_") || x.Key.EndsWith($"_{property}")))
+                {
+                    propertyDictionary.Remove(item.Key);
+                }
+               
+            }
 
             return (propertyDictionary, blobPropertyRefs, collectionPropertyRefs);
         }

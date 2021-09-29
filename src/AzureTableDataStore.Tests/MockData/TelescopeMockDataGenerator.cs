@@ -176,6 +176,7 @@ namespace AzureTableDataStore.Tests.MockData
                 }
             };
 
+    
         public static List<TelescopePackageProduct> SmallDataSet => _smallDataSet.Select(x => x()).ToList();
 
 
@@ -202,5 +203,10 @@ namespace AzureTableDataStore.Tests.MockData
 
             return items;
         }
+
+
+
+
+     
     }
 }
