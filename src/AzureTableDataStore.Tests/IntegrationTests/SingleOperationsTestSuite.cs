@@ -502,6 +502,29 @@ namespace AzureTableDataStore.Tests.IntegrationTests
 
 
         [Fact(/*Skip = "reason"*/)]
+        public async Task T07_IgnoreProperty_ComlexList_InsertOrReplace_One()
+        {
+            var store = _fixture.GetNewTableDataStore<TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo>("base");
+
+            // Same row and partition key as the previously created instance.
+            var item = MockData.TelescopeMockDataGenerator.CreateDataSet(1).Select(x => TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo.Create(x)).First();
+
+            item.Name = "replaced";
+            item.Specifications.Mount.Type = "replaced";
+
+            await store.InsertOrReplaceAsync(BatchingMode.None, item);
+
+            var fromTable = await store.GetAsync(x => x.ProductId == item.ProductId);
+
+            fromTable.Description.Should().Be(null);
+            fromTable.Specifications.Should().Be(null);
+            fromTable.SearchNames.Should().BeNullOrEmpty();
+
+
+        }
+
+
+        [Fact(/*Skip = "reason"*/)]
         public async Task T07_IgnoreProperty_Level2_InsertOrReplace_One()
         {
             var store = _fixture.GetNewTableDataStore<TelescopePackageProduct_WithIgnoreProperty>("base");

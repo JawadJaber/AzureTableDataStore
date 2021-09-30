@@ -119,6 +119,108 @@ namespace AzureTableDataStore.Tests.Models
 
     }
 
+
+    public class TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo
+    {
+        [TableRowKey]
+        public string ProductId { get; set; }
+        [TablePartitionKey]
+        public string CategoryId { get; set; }
+        public string Name { get; set; }
+
+        [TableIgnoreProperty]
+        public List<string> SearchNames { get; set; }
+        public DateTime AddedToInventory { get; set; }
+        public Guid InternalReferenceId { get; set; }
+        public long SoldItems { get; set; }
+
+        public int PackageWidthMm { get; set; }
+        public int PackageHeightMm { get; set; }
+        public int PackageDepthMm { get; set; }
+
+        [TableIgnoreProperty]
+        public string Description { get; set; }
+        public LargeBlob MainImage { get; set; }
+
+        [TableIgnoreProperty]
+        public ProductSpec Specifications { get; set; }
+
+
+
+
+        public ProductSpec_WithIgnoreProperty Specifications2 { get; set; }
+
+        public List<ProductSpec> ProductSpects { get; set; }
+
+
+        public static TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo Create(TelescopePackageProduct item)
+        {
+            var newItem = new TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo();
+            newItem.AddedToInventory = item.AddedToInventory;
+            newItem.CategoryId = item.CategoryId;
+            newItem.Description = item.Description;
+            newItem.InternalReferenceId = item.InternalReferenceId;
+            newItem.MainImage = item.MainImage;
+            newItem.Name = item.Name;
+            newItem.PackageDepthMm = item.PackageDepthMm;
+            newItem.PackageHeightMm = item.PackageHeightMm;
+            newItem.PackageWidthMm = item.PackageWidthMm;
+            newItem.ProductId = item.ProductId;
+            newItem.SearchNames = item.SearchNames;
+            newItem.SoldItems = item.SoldItems;
+            newItem.Specifications = item.Specifications;
+            newItem.ProductSpects = new List<ProductSpec>() { item.Specifications, item.Specifications, item.Specifications };
+            return newItem;
+        }
+
+        public static TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo Create2(TelescopePackageProduct item)
+        {
+            var newItem = new TelescopePackageProduct_WithIgnoreProperty_WithComplexList_IDataErrorInfo();
+            newItem.AddedToInventory = item.AddedToInventory;
+            newItem.CategoryId = item.CategoryId;
+            newItem.Description = item.Description;
+            newItem.InternalReferenceId = item.InternalReferenceId;
+            newItem.MainImage = item.MainImage;
+            newItem.Name = item.Name;
+            newItem.PackageDepthMm = item.PackageDepthMm;
+            newItem.PackageHeightMm = item.PackageHeightMm;
+            newItem.PackageWidthMm = item.PackageWidthMm;
+            newItem.ProductId = item.ProductId;
+            newItem.SearchNames = item.SearchNames;
+            newItem.SoldItems = item.SoldItems;
+            newItem.Specifications = item.Specifications;
+            newItem.Specifications2 = ProductSpec_WithIgnoreProperty.Create(item.Specifications);
+            newItem.ProductSpects = new List<ProductSpec>() { item.Specifications, item.Specifications, item.Specifications };
+            return newItem;
+        }
+
+
+      
+        [TableIgnoreProperty]
+        public string this[string columnName]
+        {
+            get
+            {
+               
+
+                return null;
+            }
+           
+        }
+
+    
+        [TableIgnoreProperty]
+        public string Error
+        {
+            get
+            {
+                var o = (System.ComponentModel.IDataErrorInfo)this;
+                return string.Empty;
+            }
+          
+        }
+
+    }
     public interface IProductSpec
     {
         string ApplicationDescription { get; set; }

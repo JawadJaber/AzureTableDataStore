@@ -60,7 +60,7 @@ namespace AzureTableDataStore
 
             collectedCollRefs.AddRange(thisObjCollPropRefs);
 
-            var otherProperties = properties.Where(x => !IsCollectionProperty(x) && !IsBlobRefProperty(x) && x.PropertyType.IsClass);
+            var otherProperties = properties.Where(x => !IsCollectionProperty(x) && !IsBlobRefProperty(x) && !IsIgnoreRefProperty(x) && x.PropertyType.IsClass);
             foreach (var property in otherProperties)
             {
                 var innerPropertyPath = new List<string>(propertyPath);
@@ -103,7 +103,7 @@ namespace AzureTableDataStore
 
             collectedCollRefs.AddRange(thisObjCollPropRefs);
 
-            var otherProperties = properties.Where(x => !IsCollectionProperty(x) && !IsBlobRefProperty(x) && x.PropertyType.IsClass);
+            var otherProperties = properties.Where(x => !IsCollectionProperty(x) && !IsBlobRefProperty(x) && !IsIgnoreRefProperty(x) && x.PropertyType.IsClass);
             foreach (var property in otherProperties)
             {
                 var innerPropertyPath = new List<string>(propertyPath);
@@ -120,6 +120,11 @@ namespace AzureTableDataStore
 
         private static bool IsBlobRefProperty(PropertyInfo propertyInfo)
             => propertyInfo.PropertyType == typeof(LargeBlob);
+
+        private static bool IsIgnoreRefProperty(PropertyInfo propertyInfo)
+            => propertyInfo.GetCustomAttributes(typeof(TableIgnorePropertyAttribute)).Any();
+
+       // //x.GetCustomAttributes(typeof(TableIgnorePropertyAttribute)).Any()
 
 
         public static List<PropertyRef<LargeBlob>> GatherPropertiesWithBlobsRecursive(object obj, EntityPropertyConverterOptions opts, 
@@ -150,7 +155,7 @@ namespace AzureTableDataStore
 
             collectedBlobRefs.AddRange(thisObjBlobPropRefs);
 
-            var otherProperties = properties.Where(x => !IsBlobRefProperty(x) && !IsCollectionProperty(x) && x.PropertyType.IsClass);
+            var otherProperties = properties.Where(x => !IsBlobRefProperty(x) && !IsCollectionProperty(x) &&  !IsIgnoreRefProperty(x) && x.PropertyType.IsClass);
             foreach (var property in otherProperties)
             {
                 var innerPropertyPath = new List<string>(propertyPath);
@@ -190,7 +195,7 @@ namespace AzureTableDataStore
 
             collectedBlobRefs.AddRange(thisObjBlobPropRefs);
 
-            var otherProperties = properties.Where(x => !IsBlobRefProperty(x) && !IsCollectionProperty(x) && x.PropertyType.IsClass);
+            var otherProperties = properties.Where(x => !IsBlobRefProperty(x) && !IsCollectionProperty(x) && !IsIgnoreRefProperty(x) && x.PropertyType.IsClass);
             foreach (var property in otherProperties)
             {
                 var innerPropertyPath = new List<string>(propertyPath);
