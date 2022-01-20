@@ -30,7 +30,7 @@ namespace AzureTableDataStore.Tests.IntegrationTests
             //ConnectionString = Environment.
             //    GetEnvironmentVariable("TestAzureStorageConnectionString") ?? "UseDevelopmentStorage=true";
 
-            
+            ConnectionString = "DefaultEndpointsProtocol=https;AccountName=tsstorageaccountstd;AccountKey=dnfldLTiFMkd7o+1wZkHsbHzAQFmJk/EyPPAFdGq9l5G35O/t1e2lnoiwZkDMPkZhasaMPiykxMoYsrJXqYfIQ==;EndpointSuffix=core.windows.net";
         }
 
         public string CreateTestTableAndContainerNames(string testContext)
