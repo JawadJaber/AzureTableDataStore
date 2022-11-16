@@ -89,6 +89,8 @@ namespace AzureTableDataStore
         /// The entity that was currently being handled, if it can be singled out.
         /// </summary>
         public TData CurrentEntity { get; internal set; }
+
+        public string SpecialMessage { get; internal set; }
     }
 
     /// <summary>

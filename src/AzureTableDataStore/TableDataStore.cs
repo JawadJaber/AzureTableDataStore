@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure;
+using StdHelpers;
 
 [assembly: InternalsVisibleTo("AzureTableDataStore.Tests")]
 
@@ -1058,6 +1059,13 @@ namespace AzureTableDataStore
                 batchItems.ForEach(item => batchOp.Add(TableWriteOpFromType(opType, item.SerializedEntity)));
                 await tableRef.ExecuteBatchAsync(batchOp).ConfigureAwait(false);
             }
+            catch (StorageException e)
+            {
+                batchExceptionContext.TableOperationException = e;
+                batchExceptionContext.SpecialMessage = e.RequestInformation.HttpStatusMessage;
+                failedTableBatches.Add(batchExceptionContext);
+                return;
+            }
             catch (Exception e)
             {
                 batchExceptionContext.TableOperationException = e;
@@ -2001,7 +2009,7 @@ namespace AzureTableDataStore
             catch (Exception e)
             {
                 throw new AzureTableDataStoreQueryException(
-                    $"Failed to retrieve entities with query '{queryExpression}': " + e.Message, e);
+                    $"Failed to retrieve entities with query '{queryExpression}': " + e.ToSummery(), e);
             }
         }
 

@@ -18,9 +18,15 @@
     <PackageId>AzureTableDataStore</PackageId>
     <PackageReleaseNotes>TableIgnoreProperty Attributes added</PackageReleaseNotes>
     <Company>Jussi Saarivirta</Company>
+	  <SignAssembly>False</SignAssembly>
+	  <Configurations>Debug;Release;Debug2</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>AzureTableDataStore.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug2|AnyCPU'">
     <DocumentationFile>AzureTableDataStore.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -29,8 +35,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0" />
-    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.8" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.10.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="2.0.0-preview" />
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
   </ItemGroup>
 
@@ -39,6 +45,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\StdHelpers\StdHelpers\StdHelpers\StdHelpers.csproj" />
   </ItemGroup>
 
 
