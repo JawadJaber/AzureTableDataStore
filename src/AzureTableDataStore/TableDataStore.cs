@@ -2277,6 +2277,10 @@ namespace AzureTableDataStore
             IDictionary<string, EntityProperty> properties,
             string etag)
         {
+            try
+            {
+
+          
             if(!properties.ContainsKey(_configuration.RowKeyProperty))
                 properties.Add(_configuration.RowKeyProperty, EntityProperty.CreateEntityPropertyFromObject(rowKey));
             if(!properties.ContainsKey(_configuration.PartitionKeyProperty))
@@ -2349,6 +2353,12 @@ namespace AzureTableDataStore
 
             return new DataStoreEntity<TData>(etag, converted, timestamp);
 
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
 
         private object CreateObjectHierarchyForProperty(object rootObject, string flattenedPropName)
