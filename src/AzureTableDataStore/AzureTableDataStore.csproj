@@ -20,6 +20,7 @@
     <Company>Jussi Saarivirta</Company>
 	  <SignAssembly>False</SignAssembly>
 	  <Configurations>Debug;Release;Debug2</Configurations>
+	  <!--<AssemblyOriginatorKeyFile>C:\ProofSoftware\IS\InspectionSoftware\ProofDesktops\Proof.Desktop.TUV\3ESOL.pfx</AssemblyOriginatorKeyFile>-->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
