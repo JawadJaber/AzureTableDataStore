@@ -3,6 +3,7 @@ using System.Linq;
 using Azure.Storage;
 using Microsoft.Azure.Cosmos.Table;
 
+
 namespace AzureTableDataStore
 {
     public class AzureStorageUtils
@@ -106,11 +107,11 @@ namespace AzureTableDataStore
             return new StorageSharedKeyCredential(creds.accountName, creds.accountKey);
         }
 
-        public static StorageCredentials GetStorageCredentialsFromConnectionString(string connectionString)
-        {
-            var creds = GetAccountNameAndKeyFromConnectionString(connectionString);
-            return new StorageCredentials(creds.accountName, creds.accountKey);
-        }
+        //public static StorageCredentials GetStorageCredentialsFromConnectionString(string connectionString)
+        //{
+        //    var creds = GetAccountNameAndKeyFromConnectionString(connectionString);
+        //    return new StorageCredentials(creds.accountName, creds.accountKey);
+        //}
 
     }
 }

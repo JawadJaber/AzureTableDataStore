@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 using AzureTableDataStore.Tests.Infrastructure;
 using AzureTableDataStore.Tests.Models;
 using FluentAssertions;
@@ -543,6 +544,31 @@ namespace AzureTableDataStore.Tests.IntegrationTests
             fromTable.Specifications.Should().Be(null);
           //  fromTable.Specifications2.ApplicationDescription.Should().BeNull();
           //  fromTable.Specifications2.Optics.Should().BeNull();
+
+
+        }
+
+
+        [Fact(/*Skip = "reason"*/)]
+        public async Task T07_IgnoreProperty_Level2_GetAsync_One()
+        {//WindowsAzure.tsstorageaccountstd.Table.test93dec6b1
+           // var store = _fixture.GetNewTableDataStore<TelescopePackageProduct_WithIgnoreProperty>("base");
+            var store = new TableDataStore<TelescopePackageProduct_WithIgnoreProperty>("DefaultEndpointsProtocol=https;AccountName=tsstorageaccountstd;AccountKey=dnfldLTiFMkd7o+1wZkHsbHzAQFmJk/EyPPAFdGq9l5G35O/t1e2lnoiwZkDMPkZhasaMPiykxMoYsrJXqYfIQ==;EndpointSuffix=core.windows.net", "test93dec6b1", false, "test93dec6b1",false, PublicAccessType.Blob);
+            
+            // Same row and partition key as the previously created instance.
+            var item = MockData.TelescopeMockDataGenerator.CreateDataSet(1).Select(x => TelescopePackageProduct_WithIgnoreProperty.Create2(x)).First();
+
+            item.Name = "replaced";
+            item.Specifications.Mount.Type = "replaced";
+
+           // await store.InsertOrReplaceAsync(BatchingMode.None, item);
+
+            var fromTable = await store.GetAsync(x => x.ProductId == item.ProductId);
+
+            fromTable.Description.Should().Be(null);
+            fromTable.Specifications.Should().Be(null);
+            //  fromTable.Specifications2.ApplicationDescription.Should().BeNull();
+            //  fromTable.Specifications2.Optics.Should().BeNull();
 
 
         }

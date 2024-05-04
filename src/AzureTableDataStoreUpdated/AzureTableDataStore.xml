@@ -1,0 +1,1162 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AzureTableDataStore</name>
+    </assembly>
+    <members>
+        <member name="M:AzureTableDataStore.ArrayExtensions.SplitToBatches``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Splits a collection to smaller batches.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="batchSize"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AzureTableDataStore.AzureStorageQuerySelectTranslator">
+            <summary>
+            Converts the <c>entity => new { entity.Prop1, entity.Prop2 ... }</c> expressions into a list of
+            string that contain the property names.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureStorageQueryTranslator">
+            <summary>
+            Converts expression queries like <c>entity => entity.Prop1 == "foo" &amp;&amp; entity.Size &lt; 500</c> into
+            TableQueries.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreConfigurationException">
+            <summary>
+            Exception representing an error in configuration.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreInternalException">
+            <summary>
+            Exception representing an internal failure inside TableDataStore.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreQueryException">
+            <summary>
+            Exception representing an TableDataStore query exception.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreBlobOperationException`1">
+            <summary>
+            Exception representing a failure when doing Azure Blob Storage operations.
+            </summary>
+            <typeparam name="TData"></typeparam>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreBlobOperationException`1.SourceBlob">
+            <summary>
+            The source <see cref="T:AzureTableDataStore.LargeBlob"/> that caused the problem.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreBlobOperationException`1.SourceEntity">
+            <summary>
+            The entity whose blob the blob is.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.BatchExceptionContext`1">
+            <summary>
+            An exception context for a failed Table batch operation. Holds information of the entities
+            that were in the operation and lists the different exceptions that occurred.
+            </summary>
+            <typeparam name="TData">The entity type.</typeparam>
+        </member>
+        <member name="P:AzureTableDataStore.BatchExceptionContext`1.BlobOperationExceptions">
+            <summary>
+            A list of any Blob Storage operation exceptions that may have occurred, with details inside each exception.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.BatchExceptionContext`1.BatchEntities">
+            <summary>
+            The list of entities in the batch that caused the exception(s).
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.BatchExceptionContext`1.TableOperationException">
+            <summary>
+            The Table Storage exception that may have occured. Will be null if only Blob operation exceptions occurred.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.BatchExceptionContext`1.CurrentEntity">
+            <summary>
+            The entity that was currently being handled, if it can be singled out.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1">
+            <summary>
+            Exception representing a failure or a number of failures that occurred inside a batch operation.
+            Any validation exceptions will be set as a collective <see cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"/> in <see cref="P:System.Exception.InnerException"/>.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1.BatchExceptionContexts">
+            <summary>
+            The exceptions collected into <see cref="T:AzureTableDataStore.BatchExceptionContext`1"/> defining each exception's context.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1">
+            <summary>
+            Exception representing a failure of a single operation (insert, update, merge, etc).
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1.BlobOperationExceptions">
+            <summary>
+            A list of any Blob Storage operation exceptions that may have occurred, with details inside each exception.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1.Entity">
+            <summary>
+            The entity that caused the exception.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1">
+            <summary>
+            Exception representing a failure of a multiple non-batched operations (insert, update, merge, etc).
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1.SingleOperationExceptions">
+            <summary>
+            A list of single operation exceptions.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1">
+            <summary>
+            Exception representing client side entity validation errors.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1.EntityValidationErrors">
+            <summary>
+            The validation errors, per entity. Dictionary key is the entity itself.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.BlobUriBuilder">
+            <summary>
+            A builder for blob download URIs.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.DataStoreEntity`1">
+            <summary>
+            Class representing a data entity stored in Table Storage: it holds the additional fields <see cref="P:AzureTableDataStore.DataStoreEntity`1.ETag"/> and <see cref="P:AzureTableDataStore.DataStoreEntity`1.Timestamp"/>.
+            </summary>
+            <typeparam name="TData">The entity type.</typeparam>
+        </member>
+        <member name="P:AzureTableDataStore.DataStoreEntity`1.ETag">
+            <summary>
+            The retrieved ETag of the entity.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.DataStoreEntity`1.Timestamp">
+            <summary>
+            The row's timestamp in the Table.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.DataStoreEntity`1.Value">
+            <summary>
+            The row data as an object.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.DataStoreEntity`1.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.DataStoreEntity`1.#ctor(System.String,`0)">
+            <summary>
+            Initializes an entity with the specified ETag.
+            </summary>
+            <param name="etag"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:AzureTableDataStore.DataStoreEntity`1.#ctor(System.String,`0,System.DateTimeOffset)">
+            <summary>
+            Initializes an entity with the specified ETag and Timestamp.
+            </summary>
+            <param name="etag"></param>
+            <param name="value"></param>
+            <param name="timestamp"></param>
+        </member>
+        <member name="T:AzureTableDataStore.INamedTableDataStore">
+            <summary>
+            The name providing interface for ITableDataStore.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.INamedTableDataStore.Name">
+            <summary>
+            The name of the TableDataStore instance, to enable identifying instances of <see cref="T:AzureTableDataStore.ITableDataStore`1"/> injected by DI.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.BatchingMode">
+            <summary>
+            The selected batching mode to use when performing multiple Insert/Merge/Replace operations.
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.BatchingMode.None">
+            <summary>
+            No batching. Perform each operation individually. Multiple operations can be performed in parallel.
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.BatchingMode.Strict">
+            <summary>
+            Strict batching, i.e. Transaction mode.
+            <para>
+            All entity operations must fit into a single batch, which will then be executed
+            as a Transaction "all or nothing". Can be performed for 1-100 entities, and be within Azure Table Storage limit of max. 4MB batch size.
+            </para>
+            <para>
+            As per Azure Table Storage batch rules, all entities in the batch must sit in the same partition.
+            </para>
+            <para>
+            NOTE: Cannot be used with operations that contain entities with <see cref="T:AzureTableDataStore.LargeBlob"/> properties, with
+            the exception of inserts and merges where strong batching can be used when all <see cref="T:AzureTableDataStore.LargeBlob"/> properties are set to non-null,
+            and <see cref="T:AzureTableDataStore.LargeBlobNullBehavior"/> is set to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty"/>.
+            </para>
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.BatchingMode.Strong">
+            <summary>
+            Strong batching, i.e. multi-batch Transaction mode with multiple partition keys allowed. In this mode entity operations are performed in sub-batches of 1-100 entities,
+            and there is no limit on the number of entities.
+            <para>
+            Operations are grouped into batches by partition key with 1-100 entities per table operation sub-batch when sent to the Table API, as per Azure Table Storage operation limits.
+            Each of these operation sub-batches are guaranteed to be "all or nothing", transaction like. Errors are tracked on sub-batch level, and one sub-batch failure does not stop execution.
+            </para>
+            <para>
+            NOTE: Cannot be used with operations that contain entities with <see cref="T:AzureTableDataStore.LargeBlob"/> properties, with
+            the exception of inserts and merges where strong batching can be used when all <see cref="T:AzureTableDataStore.LargeBlob"/> properties are set to non-null,
+            and <see cref="T:AzureTableDataStore.LargeBlobNullBehavior"/> is set to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty"/>.
+            </para>
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.BatchingMode.Loose">
+            <summary>
+            Loose batching, which can be used with any number of entities and multiple partition keys are allowed. Performs Table operations in sub-batches of 1-100 entities and each batch is followed by
+            related Blob Storage operations for <see cref="T:AzureTableDataStore.LargeBlob"/> properties. Errors are tracked on sub-batch level, and one sub-batch failure does not stop execution.
+            Errors are available in any raised exception.
+            <para>
+            Blob operations related to each entity sub-batch are performed after each Table operation sub-batch if the sub-batch operation succeeds. Any of them may fail, in which case
+            the state of some entities will be left inconsistent. Blob operation errors are tracked on individual <see cref="T:AzureTableDataStore.LargeBlob"/> and entity level and will be available in any raised exception.
+            </para>
+            <para>
+            This mode enables performance at the cost of data integrity.
+            </para>
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.EnumeratorFunc`1">
+            <summary>
+            Entity enumerator function.
+            </summary>
+            <typeparam name="T">The type of the entity.</typeparam>
+            <param name="entities">The entities in this page of results.</param>
+            <param name="continuationToken">The continuation token that will lead to the next page of results.</param>
+            <returns>A Task that should return true to continue the enumeration, or false to stop the enumeration.</returns>
+        </member>
+        <member name="T:AzureTableDataStore.ITableDataStore`1">
+            <summary>
+            Interface for the <see cref="T:AzureTableDataStore.TableDataStore`1"/>.
+            </summary>
+            <typeparam name="TData">The entity type that is stored in the Azure Storage Table.</typeparam>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.InsertAsync(AzureTableDataStore.BatchingMode,`0[])">
+            <summary>
+            Inserts new entities into Table Storage.
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="entities">One ore more entities to insert of the <typeparamref name="TData"/> type.</param>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.InsertOrReplaceAsync(AzureTableDataStore.BatchingMode,`0[])">
+            <summary>
+            Inserts or replaces entities into Table Storage. When an entity with the same partition and row keys already exists,
+            it will be replaced.
+            <para>
+            If the entity has any <see cref="T:AzureTableDataStore.LargeBlob"/> properties, those will have their old blobs replaced by the new ones. If the filename
+            changes, the old blob will get deleted. If the new property value is null, then the old blob will get deleted.
+            </para>
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="entities">One or more entities to insert/replace</param>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.MergeAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},AzureTableDataStore.LargeBlobNullBehavior,`0[])">
+            <summary>
+            Merges (aka updates) the property values from the provided entities using the properties
+            selected in the expression.
+            <para>
+            NOTE: this method assumes ETag: '*' for all entities, and therefore will overwrite indiscriminately.
+            </para>
+            <para>
+            To use ETags, use <see cref="M:AzureTableDataStore.ITableDataStore`1.MergeAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},AzureTableDataStore.LargeBlobNullBehavior,AzureTableDataStore.DataStoreEntity{`0}[])"/>
+            </para>
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="selectMergedPropertiesExpression">
+            An expression to select the properties to merge.
+            <para>Example: entity => new { entity.Name, entity.Email }</para>
+            </param>
+            <param name="largeBlobNullBehavior">
+            <para>
+            Defines how to interpret null values in <see cref="T:AzureTableDataStore.LargeBlob"/> properties. Defaults to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty"/>.
+            </para>
+            <para>
+            When the entity has any <see cref="T:AzureTableDataStore.LargeBlob"/> properties, and the behavior is set to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.DeleteBlob"/>,
+            null values in those properties will translate to their existing blobs getting deleted.
+            </para>
+            <para>
+            If the behavior is set to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty"/> then those properties will be
+            left untouched by this operation.
+            </para>
+            </param>
+            <param name="entities">The entities to update.</param>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.MergeAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},AzureTableDataStore.LargeBlobNullBehavior,AzureTableDataStore.DataStoreEntity{`0}[])">
+            <summary>
+            Merges (aka updates) the property values from the provided entities using the properties
+            selected in the expression.
+            <para>
+            Uses optimistic concurrency, i.e. the <see cref="P:AzureTableDataStore.DataStoreEntity`1.ETag"/> matching determines whether or not
+            the merge can be made.
+            </para>
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="selectMergedPropertiesExpression">
+            An expression to select the properties to merge.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <param name="largeBlobNullBehavior">
+            <para>
+            Defines how to interpret null values in <see cref="T:AzureTableDataStore.LargeBlob"/> properties. Defaults to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty"/>.
+            </para>
+            <para>
+            When the entity has any <see cref="T:AzureTableDataStore.LargeBlob"/> properties, and the behavior is set to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.DeleteBlob"/>,
+            null values in those properties will translate to their existing blobs getting deleted.
+            </para>
+            <para>
+            If the behavior is set to <see cref="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty"/> then those properties will be
+            left untouched by this operation.
+            </para>
+            </param>
+            <param name="entities">The entities to update, wrapped into <see cref="T:AzureTableDataStore.DataStoreEntity`1"/> objects to provide ETags.</param>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.ListAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <summary>
+            Lists entities without using any query. <br/>
+            The entities will be fetched in the default order (Queries that return multiple entities return them sorted in PartitionKey and RowKey order.)
+            <para>
+            NOTE: If no limit is imposed, all entries will be fetched.
+            </para>
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.ListWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <summary>
+            Lists entities without using any query wrapped into
+            <see cref="T:AzureTableDataStore.DataStoreEntity`1"/> instances that also contain the row's ETag and Timestamp.<br/>
+            The entities will be fetched in the default order (Queries that return multiple entities return them sorted in PartitionKey and RowKey order.)
+            <para>
+            NOTE: If no limit is imposed, all entries will be fetched.
+            </para>
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.FindAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <summary>
+            Finds entities using the provided query expression, and returns a list of the <typeparamref name="TData"/> typed entities.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported.
+            <para>
+            Example: <c>entity => (entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000) || entity.Money &gt;= 5000</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <param name="limit">
+            The maximum number of limits to return. If null, does not limit the number of results.
+            </param>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.FindAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <summary>
+            Finds entities using the provided query expression, with the additional <see cref="T:System.DateTimeOffset"/> parameter representing the entity Timestamp.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported.
+            The additional DateTimeOffset parameter represents the row Timestamp in the table.
+            <para>
+            Example: <c>(entity, timestamp) => entity.UserId == "007" &amp;&amp; timestamp &gt; yesterdayUtc</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and populate, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <param name="limit">The maximum number of limits to return. If null, does not limit the number of results.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.FindWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <summary>
+            Finds entities using the provided query expression and returns a list of the <typeparamref name="TData"/> typed entities wrapped into
+            <see cref="T:AzureTableDataStore.DataStoreEntity`1"/> instances that also contain the row's ETag and Timestamp.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>entity => (entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000) || entity.Money &gt;= 5000</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Name }</c>
+            </para>
+            </param>
+            <param name="limit">The maximum number of limits to return. If null, does not limit the number of results.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.FindWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <summary>
+            Finds entities using the provided query expression, with the additional <see cref="T:System.DateTimeOffset"/> parameter representing the entity Timestamp.
+            <para>
+            Returns a list of the <typeparamref name="TData"/> typed entities wrapped into
+            <see cref="T:AzureTableDataStore.DataStoreEntity`1"/> instances that also contain the row's ETag and Timestamp.
+            </para>
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>(entity, timestamp) => (entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000) || timestamp &lt; yesterdaysDate</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <param name="limit">The maximum number of limits to return. If null, does not limit the number of results.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Gets a single entity matching the query expression, or null if no matching entity was found.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>entity => entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Gets a single entity matching the query expression, with the additional <see cref="T:System.DateTimeOffset"/> expression parameter representing the entity Timestamp.
+            Returns null if no matching entity was found.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>entity => entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>(entity, timestamp) => (entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000) || timestamp &lt; yesterdaysDate</c>
+            </para>
+            </param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.GetWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Gets a single entity matching the query expression, or null if no matching entity was found.
+            <para>
+            Returns a <typeparamref name="TData"/> typed entity wrapped into
+            <see cref="T:AzureTableDataStore.DataStoreEntity`1"/> instance that also contains the row's ETag and Timestamp.
+            </para>
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>entity => entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.GetWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Gets a single entity matching the query expression, with the additional <see cref="T:System.DateTimeOffset"/> expression parameter representing the entity Timestamp.
+            Returns null if no matching entity was found.
+            <para>
+            Returns a <typeparamref name="TData"/> typed entity wrapped into
+            <see cref="T:AzureTableDataStore.DataStoreEntity`1"/> instance that also contains the row's ETag and Timestamp.
+            </para>
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>entity => entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000</c>
+            </para>
+            </param>
+            <param name="selectExpression">
+            The properties to get and return, as an expression. If null, populates all object properties.
+            <para>
+            Example: <c>entity => new { entity.UserId, entity.EmployeeType, entity.Contact.Email }</c>
+            </para>
+            </param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.DeleteTableAsync(System.Boolean)">
+            <summary>
+            Deletes the entire source table, effectively deleting all its contents.
+            If deleteBlobContainer is true, the blob container used to store the files will get deleted as well.
+            <para>
+            Note: this action is irreversible.
+            </para>
+            </summary>
+            <param name="deleteBlobContainer">If true, also delete the blob container that holds the <see cref="T:AzureTableDataStore.LargeBlob"/> files.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.DeleteAsync(AzureTableDataStore.BatchingMode,`0[])">
+            <summary>
+            Deletes entities from table. If these entities also contain <see cref="T:AzureTableDataStore.LargeBlob"/> properties, those blobs will be deleted.
+            <para>
+            Note: this action is irreversible.
+            </para>
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="entities">The entities to delete.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.DeleteAsync(AzureTableDataStore.BatchingMode,System.ValueTuple{System.String,System.String}[])">
+            <summary>
+            Deletes entities from table using the specified row and partition keys. If these entities also contain <see cref="T:AzureTableDataStore.LargeBlob"/> properties, those blobs will be deleted.
+            <para>
+            Note: this action is irreversible.
+            </para>
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="entityIds">The entity partition key + row key pairs to delete.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.DeleteAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Deletes entities from table that match the query expression. If these entities also contain <see cref="T:AzureTableDataStore.LargeBlob"/> properties, those blobs will be deleted.
+            <para>
+            Effectively performs a query, and then runs delete operations on those results. Basically a convenience method.
+            </para>
+            <para>
+            Note: this action is irreversible.
+            </para>
+            </summary>
+            <param name="batchingMode">
+            Chooses the batching mode to use when there are multiple entities.
+            </param>
+            <param name="queryExpression">The query expression used to find entities to delete</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreSingleOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreBatchedOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreMultiOperationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreEntityValidationException`1"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.CountRowsAsync">
+            <summary>
+            Counts the rows in the table. <br/>
+            Since Azure Table Storage does not implement any count method, this method must list
+            all entities, 1000 at a time, and count the total number or results. If the number of
+            entities in the table is large, this can take a lot of time.
+            </summary>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.CountRowsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Counts the rows in the table that match the query. <br/>
+            Since Azure Table Storage does not implement any count method, this method must list
+            all entities, 1000 at a time, and count the total number or results. If the number of
+            entities in the table is large, this can take a lot of time.
+            </summary>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.EnumerateWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Int32,AzureTableDataStore.EnumeratorFunc{AzureTableDataStore.DataStoreEntity{`0}},Microsoft.Azure.Cosmos.Table.TableContinuationToken)">
+            <summary>
+            Find and enumerate entities page by page using an enumerating function. <br/>
+            The enumeration will continue until the function returns false or throws an exception.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported, as well as the binary &amp;&amp; and || and parenthesis.
+            <para>
+            Example: <c>entity => entity.Category == "Worker" &amp;&amp; entity.Money &gt; 9000</c>
+            </para>
+            </param>
+            <param name="entitiesPerPage">How many entities to retrieve per page. 1-1000</param>
+            <param name="enumeratorFunc">The enumerator function. Receives the page of entities and the next continuation token as input.</param>
+            <param name="continuationToken">The continuation token to use when starting an enumeration. This can be used to later continue the enumeration.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.ITableDataStore`1.EnumerateWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Int32,AzureTableDataStore.EnumeratorFunc{AzureTableDataStore.DataStoreEntity{`0}},Microsoft.Azure.Cosmos.Table.TableContinuationToken)">
+            <summary>
+            Find and enumerate entities page by page using an enumerating function. <br/>
+            The enumeration will continue until the function returns false or throws an exception.
+            </summary>
+            <param name="queryExpression">
+            The query to use in expression form. The operators ==, !=, &gt;, &gt;=, &lt;, &lt;= and ! are supported.
+            The additional DateTimeOffset parameter represents the row Timestamp in the table.
+            <para>
+            Example: <c>(entity, timestamp) => entity.UserId == "007" &amp;&amp; timestamp &gt; yesterdayUtc</c>
+            </para>
+            </param>
+            <param name="entitiesPerPage">How many entities to retrieve per page. 1-1000</param>
+            <param name="enumeratorFunc">The enumerator function. Receives the page of entities and the next continuation token as input.</param>
+            <param name="continuationToken">The continuation token to use when starting an enumeration. This can be used to later continue the enumeration.</param>
+            <returns></returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreQueryException"></exception>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="T:AzureTableDataStore.LargeBlobNullBehavior">
+            <summary>
+            How to handle an entity's <see cref="T:AzureTableDataStore.LargeBlob"/> properties that have been set to null.
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.LargeBlobNullBehavior.IgnoreProperty">
+            <summary>
+            Ignore the property when the value is null: act like it isn't even a part of the entity.
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.LargeBlobNullBehavior.DeleteBlob">
+            <summary>
+            Setting the property value null actually means removing the blob, i.e. deleting the blob, if one already exists.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.LargeBlob">
+            <summary>
+            A class representing an Azure Storage Blob reference.
+            <para>
+            <see cref="T:AzureTableDataStore.LargeBlob"/> is stored in Tables only as a serialized JSON containing the metadata of the blob: the length, content type and the filename. <br/>
+            The blob content itself is stored in a Blob Container.
+            </para>
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.LargeBlob.Filename">
+            <summary>
+            The filename of the blob.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.LargeBlob.AsyncDataStream">
+            <summary>
+            A lazy accessor to the data stream.
+            <para>
+            When retrieved from <see cref="T:AzureTableDataStore.TableDataStore`1"/> the retrieved Stream points directly to the
+            Azure Storage Blob data.
+            </para>
+            <para>
+            When the instance is created by the user, it returns the Stream given in the constructor, or a generated
+            MemoryStream from the input bytes/string.
+            </para>
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.LargeBlob.Length">
+            <summary>
+            The length of the content. Automatically calculated and cached in the Table row.
+            <para>
+            Stored/cached in the serialized JSON so that the Azure Storage Blob stream does not need to be accessed in order
+            to get the length.
+            </para>
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.LargeBlob.ContentType">
+            <summary>
+            Content type (MIME) of the data content.
+            Defaults to "application/octet-stream" if not provided.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.GetDownloadUrl(System.Boolean,System.TimeSpan)">
+            <summary>
+            Retrieves the Blob download URL.
+            <para>
+            NOTE: This method can only be called after the Entity has been inserted to Table Storage. As long as the
+            Blob does not exist, this method will throw.
+            The insert/replace/merge/get/find methods populate the necessary properties for this method to work.
+            </para>
+            </summary>
+            <param name="withSasToken">Get the URL with a SAS token (if the storage is not publicly readable)</param>
+            <param name="tokenExpiration">How long the SAS token will be valid.</param>
+            <returns>A URL to the blob.</returns>
+            <exception cref="T:AzureTableDataStore.AzureTableDataStoreInternalException"></exception>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.#ctor(System.String,System.IO.Stream,System.String)">
+            <summary>
+            Initializes a new blob reference from an existing data Stream.
+            </summary>
+            <param name="filename">The file's/blob's filename</param>
+            <param name="data">The data stream</param>
+            <param name="contentType">MIME content type of the data. Defaults to "application/octet-stream" if not provided.</param>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.#ctor(System.String,System.Byte[],System.String)">
+            <summary>
+            Initializes a new blob from a byte array of data.
+            </summary>
+            <param name="filename">The file's/blob's filename</param>
+            <param name="data">The data bytes</param>
+            <param name="contentType">MIME content type of the data. Defaults to "application/octet-stream" if not provided.</param>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.#ctor(System.String,System.String,System.Text.Encoding,System.String)">
+            <summary>
+            Initializes a new blob from a string.
+            </summary>
+            <param name="filename">The file's/blob's filename</param>
+            <param name="data">The string</param>
+            <param name="encoding">The text encoding to use when storing as blob</param>
+            <param name="contentType">MIME content type of the data. Defaults to "application/octet-stream" if not provided.</param>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.#ctor(System.String,System.Func{System.Threading.Tasks.Task{System.IO.Stream}},System.String)">
+            <summary>
+            Initializes a new blob from an async factory method that returns a Stream.
+            </summary>
+            <param name="filename">The file's/blob's filename</param>
+            <param name="dataFactory">A method that returns a <see cref="T:System.Threading.Tasks.Task"/>&lt;Stream&gt;</param>
+            <param name="contentType">MIME content type of the data. Defaults to "application/octet-stream" if not provided.</param>
+        </member>
+        <member name="M:AzureTableDataStore.LargeBlob.#ctor(System.String,System.Func{System.IO.Stream},System.String)">
+            <summary>
+            Initializes a new blob from a factory method that returns a Stream.
+            </summary>
+            <param name="filename">The file's/blob's filename</param>
+            <param name="dataFactory">A method that returns a <see cref="T:System.IO.Stream"/></param>
+            <param name="contentType">MIME content type of the data. Defaults to "application/octet-stream" if not provided.</param>
+        </member>
+        <member name="T:AzureTableDataStore.EntityPropertyConverter">
+            <summary>
+            EntityPropertyConverter class.
+            </summary>
+        </member>
+        <member name="F:AzureTableDataStore.EntityPropertyConverter.DefaultPropertyNameDelimiter">
+            <summary>
+            The property delimiter.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.Flatten(System.Object,Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>
+            Traverses object graph, flattens and converts all nested (and not nested) properties to EntityProperties, stores them in the property dictionary.
+            The keys are constructed by appending the names of the properties visited during pre-order depth first traversal from root to each end node property delimited by '_'.
+            Allows complex objects to be stored in persistent storage systems or passed between web services in a generic way.
+            </summary>
+            <param name="root">The object to flatten and convert.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The result containing <see cref="T:System.Collections.Generic.IDictionary`2"/> of <see cref="T:Microsoft.Azure.Cosmos.Table.EntityProperty"/> objects for all properties of the flattened root object.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.Flatten(System.Object,Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions,Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>
+            Traverses object graph, flattens and converts all nested (and not nested) properties to EntityProperties, stores them in the property dictionary.
+            The keys are constructed by appending the names of the properties visited during pre-order depth first traversal from root to each end node property delimited by '_'.
+            Allows complex objects to be stored in persistent storage systems or passed between web services in a generic way.
+            </summary>
+            <param name="root">The object to flatten and convert.</param>
+            <param name="entityPropertyConverterOptions">A <see cref="T:Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions"/> object that specifies options for the entity property conversion.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The result containing <see cref="T:System.Collections.Generic.IDictionary`2"/> of <see cref="T:Microsoft.Azure.Cosmos.Table.EntityProperty"/> objects for all properties of the flattened root object.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.ConvertBack``1(System.Collections.Generic.IDictionary{System.String,Microsoft.Azure.Cosmos.Table.EntityProperty},Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>
+            Reconstructs the complete object graph of type T using the flattened entity property dictionary and returns reconstructed object.
+            The property dictionary may contain only basic properties, only nested properties or a mix of both types.
+            </summary>
+            <typeparam name="T">The type of the object to populate</typeparam>
+            <param name="flattenedEntityProperties">The flattened entity property dictionary.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The result containing the reconstructed object with its full object hierarchy.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.ConvertBack``1(System.Collections.Generic.IDictionary{System.String,Microsoft.Azure.Cosmos.Table.EntityProperty},Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions,Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>
+            Reconstructs the complete object graph of type T using the flattened entity property dictionary and returns reconstructed object.
+            The property dictionary may contain only basic properties, only nested properties or a mix of both types.
+            </summary>
+            <typeparam name="T">The type of the object to populate</typeparam>
+            <param name="flattenedEntityProperties">The flattened entity property dictionary.</param>
+            <param name="entityPropertyConverterOptions">A <see cref="T:Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions"/> object that specifies options for the entity property conversion.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The result containing the reconstructed object with its full object hierarchy.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.Flatten(System.Collections.Generic.Dictionary{System.String,Microsoft.Azure.Cosmos.Table.EntityProperty},System.Object,System.String,System.Collections.Generic.HashSet{System.Object},Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions,Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>
+            Traverses object graph, flattens and converts all nested (and not nested) properties to EntityProperties, stores them in the property dictionary.
+            The keys are constructed by appending the names of the properties visited during pre-order depth first traversal from root to each end node property delimited by '.'.
+            Allows complex objects to be stored in persistent storage systems or passed between web services in a generic way.
+            </summary>
+            <param name="propertyDictionary">The property dictionary.</param>
+            <param name="current">The current object.</param>
+            <param name="objectPath">The object path.</param>
+            <param name="antecedents">The antecedents of current object, used to detect circular references in object graph.</param>
+            <param name="entityPropertyConverterOptions">A <see cref="T:Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions"/> object that specifies options for the entity property conversion.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The <see cref="T:System.Boolean"/> to indicate success of conversion to flattened EntityPropertyDictionary.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.CreateEntityPropertyWithType(System.Object,System.Type)">
+            <summary>Creates entity property with given type.</summary>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <returns>The <see cref="T:Microsoft.Azure.Cosmos.Table.EntityProperty"/>.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.SetProperty(System.Object,System.String,System.Object,Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions,Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>Sets the property given with the property path on the passed in object.</summary>
+            <param name="root">The root object.</param>
+            <param name="propertyPath">The full property path formed by the name of properties from root object to the target property(included), appended by '.'.</param>
+            <param name="propertyValue">The property value.</param>
+            <param name="entityPropertyConverterOptions">A <see cref="T:Microsoft.Azure.Cosmos.Table.EntityPropertyConverterOptions"/> object that specifies options for the entity property conversion.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The updated <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.ChangeType(System.Object,System.Type)">
+            <summary>Creates an object of specified propertyType from propertyValue.</summary>
+            <param name="propertyValue">The property value.</param>
+            <param name="propertyType">The property type.</param>
+            <returns>The <see cref="T:System.Object"/>.</returns>
+        </member>
+        <member name="M:AzureTableDataStore.EntityPropertyConverter.ShouldSkip(System.Reflection.PropertyInfo,System.String,Microsoft.Azure.Cosmos.Table.OperationContext)">
+            <summary>
+            Indicates whether the object member should be skipped from being flattened
+            </summary>
+            <param name="propertyInfo">The property info.</param>
+            <param name="objectPath">The object path.</param>
+            <param name="operationContext">An <see cref="T:Microsoft.Azure.Cosmos.Table.OperationContext"/> object that represents the context for the current operation.</param>
+            <returns>The <see cref="T:System.Boolean"/> to indicate whether the object member should be skipped from being flattened.</returns>
+        </member>
+        <member name="T:AzureTableDataStore.EntityPropertyConverter.ObjectReferenceEqualityComparer">
+            <summary>
+            The object reference equality comparer.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.ReflectionUtils">
+            <summary>
+            Utilities for gathering collections and LargeBlob properties from class instances and types.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.SerializationUtils.CalculateApproximateEntitySize(Microsoft.Azure.Cosmos.Table.DynamicTableEntity[])">
+            <summary>
+            This method calculates the serialized size of the DynamicTableEntities.
+            The method of serialization should be very much identical to how Microsoft.Azure.Cosmos.Table serializes
+            the data to requests, which we just have to do in order to get an accurate enough
+            size of the data about to be sent. This data can then be used to ensure that batched
+            requests don't exceed the request size limits.
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.SerializationUtils.CalculateApproximateBatchRequestSize(Microsoft.Azure.Cosmos.Table.DynamicTableEntity[])">
+            <summary>
+            An approximation of how big the batch request is going to be.
+            As we roughly know how big the header data is, what is transmitted per entity and what
+            is left in the request footer we can calculate the batch size. It isn't 100% correct,
+            but close enough.
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AzureTableDataStore.TableDataStore`1">
+            <inheritdoc cref="T:AzureTableDataStore.ITableDataStore`1"/>
+        </member>
+        <member name="P:AzureTableDataStore.TableDataStore`1.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:AzureTableDataStore.TableDataStore`1.EntityPropertyConverterOptions">
+            <summary>
+            Table Storage entity flattening options.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.TableDataStore`1.UseClientSideValidation">
+            <summary>
+            Uses client side validation if set true.
+            <para>
+            Client side validation runs before insert/update/merge API operations
+            are performed and enable you to catch data issues early before trying
+            to make actual API calls to Table and Blob Storage.
+            </para>
+            <para>
+            This adds additional overhead per entity so when working with large entity
+            numbers it may be beneficial to keep it off.
+            </para>
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.TableDataStore`1.ParallelTableOperationLimit">
+            <summary>
+            Allows setting how many asynchronous Azure Storage Table operations (sub-batches in batch inserts/merges, or individual inserts/merges when not using batching) can be run in parallel per call.
+            </summary>
+        </member>
+        <member name="P:AzureTableDataStore.TableDataStore`1.ParallelBlobBatchOperationLimit">
+            <summary>
+            Allows setting how many parallel asynchronous Azure Storage Blob operations can be initiated per a sub-batch of 100 entities<br/>
+            (so a maximum of <see cref="P:AzureTableDataStore.TableDataStore`1.ParallelTableOperationLimit"/> * <see cref="P:AzureTableDataStore.TableDataStore`1.ParallelBlobBatchOperationLimit"/> blob operations can be running in parallel).
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.#ctor(System.String,System.String,System.Boolean,System.String,System.Boolean,Azure.Storage.Blobs.Models.PublicAccessType,System.String,System.String,System.String,System.String)">
+            <summary>
+            Create a new instance of TableDataStore using connection strings.
+            </summary>
+            <param name="tableStorageConnectionString">The storage account connection string</param>
+            <param name="tableName">The table name to use</param>
+            <param name="createTableIfNotExist">Create the table if it does not exist yet</param>
+            <param name="blobContainerName">The blob container name where the <see cref="T:AzureTableDataStore.LargeBlob"/> blobs of entities are to be stored</param>
+            <param name="createContainerIfNotExist">Create the blob container if it does not exist yet</param>
+            <param name="blobContainerAccessType">The access type for blob containers when creating them</param>
+            <param name="blobStorageConnectionString">The storage account connection string that is used for storing the blobs</param>
+            <param name="storeName">This TableDataStore instance's name, for dependency injection. Optional, defaults to "default".</param>
+            <param name="partitionKeyProperty">The property name in <typeparamref name="TData"/> that acts as the entity Partition Key.<br/>
+            Not needed if the <typeparamref name="TData"/> has the Partition Key defined using the <see cref="T:AzureTableDataStore.TablePartitionKeyAttribute"/>.
+            </param>
+            <param name="rowKeyProperty">The property name in <typeparamref name="TData"/> that acts as the entity Row Key.<br/>
+            Not needed if the <typeparamref name="TData"/> has the Row Key defined using the <see cref="T:AzureTableDataStore.TableRowKeyAttribute"/>.
+            </param>
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.#ctor(Microsoft.Azure.Cosmos.Table.StorageCredentials,Microsoft.Azure.Cosmos.Table.StorageUri,System.String,System.Boolean,Azure.Storage.StorageSharedKeyCredential,System.Uri,System.String,System.Boolean,Azure.Storage.Blobs.Models.PublicAccessType,System.String,System.String,System.String)">
+            <summary>
+            Create a new instance of TableDataStore using credentials and URIs.
+            </summary>
+            <param name="tableStorageCredentials">The table storage account credentials</param>
+            <param name="tableStorageUri">The URI of the table storage account <br/> i.e. <c>https://accountname.table.core.windows.net</c></param>
+            <param name="tableName">The table name to use</param>
+            <param name="createTableIfNotExist">Create the table if it does not exist yet</param>
+            <param name="blobStorageServiceUri">The URI of the blob storage account <br/> i.e. <c>https://accountname.blob.core.windows.net</c></param>
+            <param name="blobContainerName">The blob container name where the <see cref="T:AzureTableDataStore.LargeBlob"/> blobs of entities are to be stored</param>
+            <param name="createContainerIfNotExist">Create the blob container if it does not exist yet</param>
+            <param name="blobContainerAccessType">The access type for blob containers when creating them</param>
+            <param name="blobStorageCredentials">The storage account credentials that is used for storing the blobs</param>
+            <param name="storeName">This TableDataStore instance's name, for dependency injection. Optional, defaults to "default".</param>
+            <param name="partitionKeyProperty">The property name in <typeparamref name="TData"/> that acts as the entity Partition Key.<br/>
+            Not needed if the <typeparamref name="TData"/> has the Partition Key defined using the <see cref="T:AzureTableDataStore.TablePartitionKeyAttribute"/>.
+            </param>
+            <param name="rowKeyProperty">The property name in <typeparamref name="TData"/> that acts as the entity Row Key.<br/>
+            Not needed if the <typeparamref name="TData"/> has the Row Key defined using the <see cref="T:AzureTableDataStore.TableRowKeyAttribute"/>.
+            </param>
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.InsertAsync(AzureTableDataStore.BatchingMode,`0[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.DeleteAsync(AzureTableDataStore.BatchingMode,`0[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.DeleteAsync(AzureTableDataStore.BatchingMode,System.ValueTuple{System.String,System.String}[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.DeleteAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.InsertOrReplaceAsync(AzureTableDataStore.BatchingMode,`0[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.MergeAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},AzureTableDataStore.LargeBlobNullBehavior,`0[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.MergeAsync(AzureTableDataStore.BatchingMode,System.Linq.Expressions.Expression{System.Func{`0,System.Object}},AzureTableDataStore.LargeBlobNullBehavior,AzureTableDataStore.DataStoreEntity{`0}[])">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.ExtractEntityProperties(`0,System.Boolean)">
+            <summary>
+            Extracts entity properties into flattened dictionary, blob property references and collection
+            property references.
+            </summary>
+            <param name="entity"></param>
+            <param name="includeNullBlobs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.ListAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.ListWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.GetWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.GetWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.FindWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.FindWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.FindAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.FindAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Nullable{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.DeleteTableAsync(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.CountRowsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.CountRowsAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.EnumerateWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Int32,AzureTableDataStore.EnumeratorFunc{AzureTableDataStore.DataStoreEntity{`0}},Microsoft.Azure.Cosmos.Table.TableContinuationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStore`1.EnumerateWithMetadataAsync(System.Linq.Expressions.Expression{System.Func{`0,System.DateTimeOffset,System.Boolean}},System.Int32,AzureTableDataStore.EnumeratorFunc{AzureTableDataStore.DataStoreEntity{`0}},Microsoft.Azure.Cosmos.Table.TableContinuationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:AzureTableDataStore.TableDataStoreExtensions">
+            <summary>
+            Extensions to get named TableDataStore instances from an IEnumerable.
+            Convenient when needing to inject multiple instances via DI.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStoreExtensions.NamedInstance(System.Collections.Generic.IEnumerable{AzureTableDataStore.INamedTableDataStore},System.String)">
+            <summary>
+            Retrieves a named instance of <see cref="T:AzureTableDataStore.INamedTableDataStore"/> from the IEnumerable.
+            </summary>
+            <param name="stores"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AzureTableDataStore.TableDataStoreExtensions.NamedInstance``1(System.Collections.Generic.IEnumerable{AzureTableDataStore.ITableDataStore{``0}},System.String)">
+            <summary>
+            Retrieves a named instance of <see cref="T:AzureTableDataStore.ITableDataStore`1"/> from the IEnumerable.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.TableIgnorePropertyAttribute">
+            <summary>
+            An attribute that marks a property to be ignored in Table.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.TablePartitionKeyAttribute">
+            <summary>
+            An attribute that marks a property to be the Table Partition Key.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.TableRowKeyAttribute">
+            <summary>
+            An attribute that marks a property to be the Table Row Key.
+            </summary>
+        </member>
+        <member name="T:AzureTableDataStore.TableString">
+            <summary>
+            Utilities for Table Entity strings.
+            </summary>
+        </member>
+        <member name="M:AzureTableDataStore.TableString.AsComparable(System.String)">
+            <summary>
+            Notation to allow lt, lte, gt and gte comparison of strings in query expressions. <br/>
+            Allows you to say e.g.: <br/>
+            <c>entity => entity.RowKey.AsComparable() &gt; "Charlie".AsComparable()</c>
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.NotNullAttribute">
+            <summary>
+            Specifies that an output will not be null even if the corresponding type allows it.
+            Also specifies that an input argument was not null when the call returns.
+            </summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute">
+            <summary>
+            Specifies that the output will be non-null if the named parameter is non-null.
+            </summary>
+        </member>
+        <member name="M:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute"/> class.
+            </summary>
+            <param name="parameterName"> The associated parameter name. The output will be non-null if the argument to the parameter specified is non-null.</param>
+        </member>
+        <member name="P:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute.ParameterName">
+            <summary>
+            Gets the associated parameter name.
+            </summary>
+        </member>
+    </members>
+</doc>

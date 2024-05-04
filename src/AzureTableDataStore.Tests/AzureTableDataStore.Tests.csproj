@@ -7,7 +7,7 @@
 
     <SignAssembly>True</SignAssembly>
 
-    <AssemblyOriginatorKeyFile>C:\ProofSoftware\IS\InspectionSoftware\ProofDesktops\Proof.Desktop.TUV\3ESOL.pfx</AssemblyOriginatorKeyFile>
+    <!--<AssemblyOriginatorKeyFile>C:\ProofSoftware\IS\InspectionSoftware\ProofDesktops\Proof.Desktop.TUV\3ESOL.pfx</AssemblyOriginatorKeyFile>-->
   </PropertyGroup>
 
   <ItemGroup>

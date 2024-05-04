@@ -12,11 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TODO.txt = TODO.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JawadAzureTableDataStoreConsole", "JawadAzureTableDataStoreConsole\JawadAzureTableDataStoreConsole.csproj", "{AB3FC66A-A40A-44E4-95A7-9872CF9400C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JawadAzureTableDataStoreConsole", "JawadAzureTableDataStoreConsole\JawadAzureTableDataStoreConsole.csproj", "{AB3FC66A-A40A-44E4-95A7-9872CF9400C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StdAzure", "..\..\StdAzure\StdAzure\StdAzure\StdAzure.csproj", "{DECD6252-91B9-4C27-B077-F31A74E2255C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StdHelpers", "..\..\StdHelpers\StdHelpers\StdHelpers\StdHelpers.csproj", "{596D4354-C10F-4B84-A1E8-FC38AA8F7CB7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Units.Standard", "..\..\Units\Units.Standard\Units.Standard\Units.Standard.csproj", "{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureTableDataStoreUpdated", "AzureTableDataStoreUpdated\AzureTableDataStoreUpdated.csproj", "{F53957F5-A14A-420D-A8C8-6C719358FBE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureDataTablesConsoleTest", "AzureDataTablesConsoleTest\AzureDataTablesConsoleTest.csproj", "{A8895D8F-995D-4723-B224-BE63A2E8FD74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +72,30 @@ Global
 		{596D4354-C10F-4B84-A1E8-FC38AA8F7CB7}.Debug3|Any CPU.Build.0 = Debug3|Any CPU
 		{596D4354-C10F-4B84-A1E8-FC38AA8F7CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{596D4354-C10F-4B84-A1E8-FC38AA8F7CB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Debug2|Any CPU.ActiveCfg = Debug2|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Debug2|Any CPU.Build.0 = Debug2|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Debug3|Any CPU.ActiveCfg = Debug3|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Debug3|Any CPU.Build.0 = Debug3|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD03FBBB-5D54-48D0-81E5-C6046371F8F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Debug2|Any CPU.ActiveCfg = Debug2|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Debug2|Any CPU.Build.0 = Debug2|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Debug3|Any CPU.ActiveCfg = Debug2|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Debug3|Any CPU.Build.0 = Debug2|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F53957F5-A14A-420D-A8C8-6C719358FBE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Debug2|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Debug2|Any CPU.Build.0 = Debug|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Debug3|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Debug3|Any CPU.Build.0 = Debug|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8895D8F-995D-4723-B224-BE63A2E8FD74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

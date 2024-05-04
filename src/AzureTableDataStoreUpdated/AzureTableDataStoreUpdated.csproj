@@ -43,7 +43,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="2.0.0-preview" />
-    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+	  <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+	  <!--<PackageReference Include="Azure.Data.Tables" Version="12.8.3" />-->
   </ItemGroup>
 
   <ItemGroup>
