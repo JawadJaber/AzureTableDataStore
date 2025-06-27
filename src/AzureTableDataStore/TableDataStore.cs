@@ -326,56 +326,104 @@ namespace AzureTableDataStore
             return blobContainerClient;
         }
 
+        //private CloudTable GetTable()
+        //{
+        //    lock (_syncLock)
+        //    {
+        //        if (!_tableClientInitialized)
+        //        {
+        //            if (_configuration.AllowTableCreation)
+        //            {
+        //                try
+        //                {
+        //                    var cloudTableClient = _cloudStorageAccount.CreateCloudTableClient();
+        //                    var tableRef = cloudTableClient.GetTableReference(_configuration.StorageTableName);
+        //                    tableRef.CreateIfNotExists();
+        //                    _tableClientInitialized = true;
+        //                    return tableRef;
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    throw new AzureTableDataStoreInternalException("Unable to initialize table (CreateIfNotExists): " + e.Message,
+        //                        e);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                try
+        //                {
+        //                    var cloudTableClient = _cloudStorageAccount.CreateCloudTableClient();
+        //                    var tableRef = cloudTableClient.GetTableReference(_configuration.StorageTableName);
+        //                    bool exists = tableRef.Exists();
+        //                    if (!exists)
+        //                        throw new AzureTableDataStoreInternalException(
+        //                            $"Table '{_configuration.StorageTableName}' does not exist");
+
+        //                    _tableClientInitialized = true;
+        //                    return tableRef;
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    throw new AzureTableDataStoreInternalException("Unable to initialize table (CreateIfNotExists): " + e.Message,
+        //                        e);
+        //                }
+        //            }
+
+        //        }
+
+        //    }
+
+        //    return _cloudStorageAccount.CreateCloudTableClient()
+        //        .GetTableReference(_configuration.StorageTableName);
+        //}
+
+
         private CloudTable GetTable()
         {
             lock (_syncLock)
             {
                 if (!_tableClientInitialized)
                 {
-                    if (_configuration.AllowTableCreation)
+                    var cloudTableClient = _cloudStorageAccount.CreateCloudTableClient();
+                    var tableRef = cloudTableClient.GetTableReference(_configuration.StorageTableName);
+
+                    // Configure retry and timeout
+                    var requestOptions = new TableRequestOptions
                     {
-                        try
-                        {
-                            var cloudTableClient = _cloudStorageAccount.CreateCloudTableClient();
-                            var tableRef = cloudTableClient.GetTableReference(_configuration.StorageTableName);
-                            tableRef.CreateIfNotExists();
-                            _tableClientInitialized = true;
-                            return tableRef;
-                        }
-                        catch (Exception e)
-                        {
-                            throw new AzureTableDataStoreInternalException("Unable to initialize table (CreateIfNotExists): " + e.Message,
-                                e);
-                        }
-                    }
-                    else
+                        MaximumExecutionTime = TimeSpan.FromSeconds(5),     // total allowed time for operation
+                        ServerTimeout = TimeSpan.FromSeconds(2),            // server response timeout
+                        RetryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(1), 2)
+                    };
+
+                    var operationContext = new OperationContext();
+
+                    try
                     {
-                        try
+                        if (_configuration.AllowTableCreation)
                         {
-                            var cloudTableClient = _cloudStorageAccount.CreateCloudTableClient();
-                            var tableRef = cloudTableClient.GetTableReference(_configuration.StorageTableName);
-                            bool exists = tableRef.Exists();
-                            if (!exists)
+                            tableRef.CreateIfNotExists(requestOptions, operationContext);
+                        }
+                        else
+                        {
+                            if (!tableRef.Exists(requestOptions, operationContext))
                                 throw new AzureTableDataStoreInternalException(
                                     $"Table '{_configuration.StorageTableName}' does not exist");
+                        }
 
-                            _tableClientInitialized = true;
-                            return tableRef;
-                        }
-                        catch (Exception e)
-                        {
-                            throw new AzureTableDataStoreInternalException("Unable to initialize table (CreateIfNotExists): " + e.Message,
-                                e);
-                        }
+                        _tableClientInitialized = true;
+                        return tableRef;
                     }
-
+                    catch (StorageException)
+                    {
+                        throw;// new AzureTableDataStoreInternalException("Timeout or network error during table initialization: " + ex.Message, ex);
+                    }
                 }
-
             }
 
             return _cloudStorageAccount.CreateCloudTableClient()
                 .GetTableReference(_configuration.StorageTableName);
         }
+
 
         private void StripSpeciallyHandledProperties(IEnumerable<ReflectionUtils.PropertyRef> propertyRefs)
         {
